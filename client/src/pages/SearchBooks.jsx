@@ -1,53 +1,42 @@
-// Import useState from react to use state in the SearchBooks component and set the initial state of the searchedBooks and searchInput variables.
+// Import necessary components and functions
 import { useState } from "react";
-// Import the useQuery and useMutation hooks from @apollo/client to make requests to the GraphQL server.
 import { useQuery, useMutation } from "@apollo/client";
-// Import the GET_ME and SAVE_BOOK queries from the queries file.
 import { Container, Col, Form, Button, Card, Row } from "react-bootstrap";
-// Import GET_ME from the queries file.
 import { GET_ME } from "../utils/queries";
-// Import SAVE_BOOK from the mutations file.
 import { SAVE_BOOK } from "../utils/mutations";
-// Import the Auth service.
 import Auth from "../utils/auth";
-// Import the searchGoogleBooks function from the API file.
 import { searchGoogleBooks } from "../utils/API";
-// Define the SearchBooks functional component.
+
 const SearchBooks = () => {
-  // Set the initial state of the searchedBooks and searchInput variables using the useState hook.
   const [searchedBooks, setSearchedBooks] = useState([]);
-  // Set the initial state of the searchInput variable using the useState hook.
   const [searchInput, setSearchInput] = useState("");
-  // Use the useQuery hook to make the GET_ME query request.
+  // useQuery hook for GET_ME query request
   const { data, refetch } = useQuery(GET_ME);
-  // Use optional chaining to check if data exists.
   const savedBookIds = data?.me?.savedBooks.map((book) => book.bookId) || [];
-  // Define the saveBook mutation.
   const [saveBook] = useMutation(SAVE_BOOK, {
-    // Add the onCompleted option to the saveBook mutation to refetch the GET_ME query after the mutation is complete.
+    // Add onCompleted option to saveBook mutation to refetch GET_ME query after mutation runs
     onCompleted: () => {
       refetch();
     },
   });
-  // Define the handleFormSubmit function with the event parameter.
+
   const handleFormSubmit = async (event) => {
-    // Prevent the default form submission behavior.
     event.preventDefault();
-    // Check if the searchInput variable is empty and return false if it is.
+    // Check searchInput variable. If empty, return false
     if (!searchInput) {
       return false;
     }
-    // Try block to execute the searchGoogleBooks function and pass the searchInput as the argument.
+  
     try {
-      // Execute the searchGoogleBooks function and pass the searchInput as the argument.
+      // searchGoogleBooks function will pass searchInput as argument
       const response = await searchGoogleBooks(searchInput);
-      // Check if the response is not ok and throw an error if it is not.
+ 
       if (!response.ok) {
         throw new Error("something went wrong!");
       }
-      // Destructure the items property from the response.json() method.
+      // Destructure items from response.json()
       const { items } = await response.json();
-      // Map over the items array and return a new array of objects with the book data.
+      // Map over items array and return new array of objects with book data
       const bookData = items.map((book) => ({
         bookId: book.id,
         authors: book.volumeInfo.authors || ["No author to display"],
@@ -55,23 +44,19 @@ const SearchBooks = () => {
         description: book.volumeInfo.description,
         image: book.volumeInfo.imageLinks?.thumbnail || "",
       }));
-      // Update the searchedBooks state with the bookData array.
+      // Update searchedBooks state with bookData
       setSearchedBooks(bookData);
-      // Clear the searchInput state.
       setSearchInput("");
     } catch (err) {
       console.error(err);
     }
   };
-  // Define the handleSaveBook function with the bookId parameter.
   const handleSaveBook = async (bookId) => {
-    // Find the book to save by the bookId.
+    // Find book by bookId
     const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
-    // Try block to execute the saveBook mutation and pass the bookToSave object as the variables.
     try {
-      // Execute the saveBook mutation and pass the bookToSave object as the variables.
+  
       await saveBook({
-        // Pass the bookToSave object as the variables.
         variables: {
           authors: bookToSave.authors,
           description: bookToSave.description,
@@ -85,7 +70,7 @@ const SearchBooks = () => {
       console.error("Error saving book:", err.message);
     }
   };
-  // Return the JSX for the SearchBooks component.
+  // Return JSX for SearchBooks component
   return (
     <>
       <div className="text-light bg-dark p-5">

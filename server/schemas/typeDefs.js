@@ -1,4 +1,4 @@
-// Define the typeDefs using the gql tag for the Query, Mutation, User, Book, and Auth types.
+// Define the typeDefs using the gql tag for the Query, Mutation, User, Book, and Auth types
 const typeDefs = `
   type Query {
     me: User

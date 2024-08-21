@@ -1,19 +1,15 @@
-// Import the useState hook from React.
+// Import necessary components
 import { useState } from "react";
-// Import Link from React Router DOM to link to different routes.
 import { Link } from "react-router-dom";
-// Import the Navbar, Nav, Container, Modal, and Tab components from React Bootstrap.
 import { Navbar, Nav, Container, Modal, Tab } from "react-bootstrap";
-// Import the SignUpForm and LoginForm components.
 import SignUpForm from "./SignupForm";
 import LoginForm from "./LoginForm";
-// Import the Auth service.
 import Auth from "../utils/auth";
-// Define the AppNavbar functional component.
+//AppNavbar function
 const AppNavbar = () => {
-  // Set modal display state.
+  // Set modal display state
   const [showModal, setShowModal] = useState(false);
-  // Return the JSX for the AppNavbar component.
+  // Return JSX for AppNavbar
   return (
     <>
       <Navbar bg="dark" variant="dark" expand="lg">

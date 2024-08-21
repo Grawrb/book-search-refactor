@@ -1,57 +1,52 @@
-// Replace the addUser() functionality imported from the API file with the ADD_USER mutation functionality.
-// Import useState from react.
+// Import necesarry functions and components
 import { useState } from "react";
-// Import Form, Button, and Alert components from react-bootstrap.
 import { Form, Button, Alert } from "react-bootstrap";
-// Import the useMutation hook from the @apollo/client React hook.
 import { useMutation } from "@apollo/client";
-// Import the ADD_USER mutation.
 import { ADD_USER } from "../utils/mutations";
-// Import the Auth service.
 import Auth from "../utils/auth";
-// Define the SignUpForm functional component.
+// SignUpForm function
 const SignupForm = () => {
-  // Set initial form state.
+  // Set initial form state
   const [userFormData, setUserFormData] = useState({
     username: "",
     email: "",
     password: "",
   });
-  // Define the addUser mutation.
+
   const [addUser, { error }] = useMutation(ADD_USER);
-  // Set state for form validation.
+  // Set state for form validation
   const [validated] = useState(false);
-  // Set state for alert.
+  // Set state for alert
   const [showAlert, setShowAlert] = useState(false);
-  // Define the handleInputChange function with the event parameter.
+
   const handleInputChange = (event) => {
-    // Destructure the name and value properties from the event.target object.
+    // Destructure name and value from event.target object
     const { name, value } = event.target;
-    // Update the userFormData state using the setUserFormData function.
+    // Update userFormData state using setUserFormData function
     setUserFormData({ ...userFormData, [name]: value });
   };
-  // Define the handleFormSubmit function with the event parameter, and prevent the default form submission behavior.
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    // Check if form has everything (as per react-bootstrap docs).
+    // Check form values
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
     }
-    // Try block to execute the addUser mutation and pass the userFormData as the variables.
+ 
     try {
       const { data } = await addUser({
         variables: { ...userFormData },
       });
-      // Use the Auth.login() method to log the user in with the token received from the mutation response.
+      // Use Auth.login() method to login user using token from mutation response
       const token = data.addUser.token;
       Auth.login(token);
     } catch (err) {
       if (err.graphQLErrors) {
         console.error("GraphQL errors:", err.graphQLErrors);
-        // Check for specific error message related to duplicate key.
+        // Check for duplicate key
         const duplicateError = err.graphQLErrors.find((error) =>
           error.message.includes("duplicate key error")
         );
@@ -61,14 +56,14 @@ const SignupForm = () => {
           alert("An error occurred during signup.");
         }
       }
-      // Check for network error.
+      // Check for network error
       if (err.networkError) {
         console.error("Network error:", err.networkError);
       }
       console.error("Error details:", error);
       setShowAlert(true);
     }
-    // Clear form values after submission.
+    // Clear form after submission
     setUserFormData({
       username: "",
       email: "",

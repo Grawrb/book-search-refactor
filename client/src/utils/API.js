@@ -1,4 +1,6 @@
 // All code below commented out because it is now redundant
+// Left in to demonstrate changes made
+
 // route to get logged in user's info (needs the token)
 // export const getMe = (token) => {
 //   return fetch('/api/users/me', {
@@ -29,7 +31,7 @@
 //   });
 // };
 
-// // save book data for a logged in user
+//  save book data for a logged in user
 // export const saveBook = (bookData, token) => {
 //   return fetch('/api/users', {
 //     method: 'PUT',
@@ -41,7 +43,7 @@
 //   });
 // };
 
-// // remove saved book data for a logged in user
+//  remove saved book data for a logged in user
 // export const deleteBook = (bookId, token) => {
 //   return fetch(`/api/users/books/${bookId}`, {
 //     method: 'DELETE',

@@ -37,7 +37,7 @@ const startApolloServer = async () => {
     })
   );
 
-  // If we're in production, serve client/dist as static assets.
+  // If in production, serve client/dist as static assets
   if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "../client/dist")));
 
@@ -45,7 +45,7 @@ const startApolloServer = async () => {
       res.sendFile(path.join(__dirname, "../client/dist/index.html"));
     });
   }
-// DB once open, start the server and listen to the ports.
+// DB once open, start the server and listen to the ports
   db.once("open", () => {
     app.listen(PORT, () => {
       console.log(`API server running on port ${PORT}!`);
@@ -53,5 +53,5 @@ const startApolloServer = async () => {
     });
   });
 };
-// Start the ApolloServer.
+// Start ApolloServer
 startApolloServer();

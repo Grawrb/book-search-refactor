@@ -13,16 +13,16 @@ import Navbar from "./components/Navbar";
 const GRAPHQL_ENDPOINT =
   import.meta.env.VITE_GRAPHQL_ENDPOINT || "http://localhost:3001/graphql";
 
-// Construct our main GraphQL API endpoint.
+
 const httpLink = createHttpLink({
   uri: GRAPHQL_ENDPOINT,
 });
 
-// Construct request middleware that will attach the JWT token to every request as an `authorization` header.
+// Attaches JWT token to every request as `authorization` header.
 const authLink = setContext((_, { headers }) => {
-  // Get the authentication token from local storage if it exists.
+  // Get authentication token from local storage
   const token = localStorage.getItem("id_token");
-  // Return the headers to the context so httpLink can read them.
+  // Return headers to context
   return {
     headers: {
       ...headers,
@@ -31,7 +31,7 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-// Define the custom cache with merge function.
+// Define custom cache with merge function
 const cache = new InMemoryCache({
   typePolicies: {
     User: {
@@ -45,7 +45,7 @@ const cache = new InMemoryCache({
               incoming.map((book) => [book.bookId, book])
             );
 
-            // Combine the books, favoring incoming data in case of conflicts.
+            // Combine books, overwriting previous data if conflicts
             return [...existingBooks.values(), ...incomingBooks.values()];
           },
         },
@@ -54,9 +54,7 @@ const cache = new InMemoryCache({
   },
 });
 
-// Create Apollo Client instance with the custom cache.
 const client = new ApolloClient({
-  // Set up our client to execute the `authLink` middleware prior to making the request to our GraphQL API.
   link: authLink.concat(httpLink),
   cache,
 });

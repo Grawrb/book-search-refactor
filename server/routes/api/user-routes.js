@@ -1,4 +1,5 @@
 // File commented out as it is no longer necessary due to new routes
+// Left in repo to demonstate changes made
 // const router = require('express').Router();
 // const {
 //   createUser,
@@ -8,10 +9,10 @@
 //   login,
 // } = require('../../controllers/user-controller');
 
-// // import middleware
+//  import middleware
 // const { authMiddleware } = require('../../utils/auth');
 
-// // put authMiddleware anywhere we need to send a token for verification of user
+//  put authMiddleware anywhere we need to send a token for verification of user
 // router.route('/').post(createUser).put(authMiddleware, saveBook);
 
 // router.route('/login').post(login);

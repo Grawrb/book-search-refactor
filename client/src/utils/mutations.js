@@ -1,6 +1,6 @@
-// Import the gql tagged template literal from @apollo/client to define the queries.
+// Import gql tagged template literal from @apollo/client to define queries
 import { gql } from "@apollo/client";
-// LOGIN_USER will execute the loginUser mutation set up using Apollo Server.
+// LOGIN_USER executes loginUser mutation using Apollo Server
 export const LOGIN_USER = gql`
   mutation login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
@@ -22,7 +22,7 @@ export const LOGIN_USER = gql`
     }
   }
 `;
-// ADD_USER will execute the addUser mutation.
+// ADD_USER executes addUser mutation
 export const ADD_USER = gql`
   mutation addUser($username: String!, $email: String!, $password: String!) {
     addUser(username: $username, email: $email, password: $password) {
@@ -44,7 +44,7 @@ export const ADD_USER = gql`
     }
   }
 `;
-// SAVE_BOOK will execute the saveBook mutation.
+// SAVE_BOOK executes saveBook mutation
 export const SAVE_BOOK = gql`
   mutation SaveBook(
     $authors: [String]
@@ -77,7 +77,7 @@ export const SAVE_BOOK = gql`
     }
   }
 `;
-// REMOVE_BOOK will execute the removeBook mutation.
+// REMOVE_BOOK executes removeBook mutation
 export const REMOVE_BOOK = gql`
   mutation removeBook($bookId: String!) {
     removeBook(bookId: $bookId) {

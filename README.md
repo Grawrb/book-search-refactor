@@ -24,6 +24,7 @@ Once all necessary packages have been installed, this application includes node 
 
 ## Images and Links
 
+- <a href="https://book-search-refactor-uhl9.onrender.com" alt="Render Deploy Link"> Render Deploy Link </a>
 
 
 ## Contribution Guidelines
@@ -32,7 +33,7 @@ If you would like to contribute to this project, please fork the repository. Rea
 
 ## Acknowledgements
 
-This application was built using code examples from University of Utah's Full Stack Coding Bootcamp as reference material.
+This application was built using code examples from University of Utah's Full Stack Coding Bootcamp as reference material. Some comments were auto-completed by Amazon Q assistant.
 
 ## Contact Info
 
